@@ -37,8 +37,11 @@ const mensajesNormalizadoGet = async (req = request, res = response) => {
   const mensajeNormalizado = normalizeMensaje(mensaje);
   res.json({
     mensajeNormalizado,
-    // tamaño: JSON.stringify(mensajeNormalizado).length,
-    compresion: "0",
+    tamañoOriginal: JSON.stringify(mensaje).length,
+    tamañoNormalizado: JSON.stringify(mensajeNormalizado).length,
+    compresion:
+      JSON.stringify(mensaje).length /
+      JSON.stringify(mensajeNormalizado).length,
   });
 };
 
@@ -62,6 +65,7 @@ function normalizeMensaje(mensaje) {
     "Longitud objeto normalizado: ",
     JSON.stringify(normalizedMensaje).length
   );
+  return normalizedMensaje;
 }
 
 module.exports = {

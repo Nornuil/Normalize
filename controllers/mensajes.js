@@ -52,11 +52,14 @@ function print(objeto) {
 function normalizeMensaje(mensaje) {
   const autoresSchema = new schema.Entity("autores");
   const mensajeSchema = new schema.Entity("mensaje", {
-    id_mensaje: [autoresSchema],
-    mensaje: autoresSchema,
+    author: autoresSchema,
   });
 
-  const normalizedMensaje = normalize(mensaje, mensajeSchema);
+  const generalSchema = new schema.Entity("general", {
+    author: [autoresSchema],
+    comments: [mensajeSchema],
+  });
+  const normalizedMensaje = normalize(mensaje, generalSchema);
 
   print(normalizedMensaje);
 

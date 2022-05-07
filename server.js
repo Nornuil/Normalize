@@ -3,7 +3,6 @@ require("dotenv").config();
 const productos = require("./routes/productos");
 const mensajes = require("./routes/mensajes");
 const PORT = process.env.PORT || 8080;
-// const { Productos } = require("./classProductos/classProductos"); //MODIFICAR A MONGO
 const { dbConnection } = require("./database/config");
 
 const app = express();
@@ -28,19 +27,11 @@ async function conexDB() {
 
 io.on("connection", async (socket) => {
   console.log("Cliente conectado con id: ", socket.id);
-  // socket.emit("update_products", await manejadorProductos.getAll());
   //CHAT
   socket.on("new_message", async (data) => {
-    // await manejadorProductos.insertMessage(data);
-    io.sockets.emit(
-      "messages_received"
-      // await manejadorProductos.getMessages("mensajes")
-    );
+    io.sockets.emit("messages_received");
   });
-  io.sockets.emit(
-    "messages_received"
-    // await manejadorProductos.getMessages("mensajes")
-  );
+  io.sockets.emit("messages_received");
 });
 
 const server = httpServer.listen(PORT, () =>
